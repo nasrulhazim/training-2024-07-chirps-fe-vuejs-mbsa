@@ -15,11 +15,13 @@ const authStore = useAuthStore();
         </div>
         <nav class="space-x-4">
           <template v-if="!authStore.token">
-            <RouterLink to="/login" class="hover:text-gray-400">Login</RouterLink>
-            <RouterLink to="/register" class="hover:text-gray-400">Register</RouterLink>
+            <div class="flex justify-between gap-x-2">
+              <RouterLink to="/login" class="hover:text-gray-400">Login</RouterLink>
+              <RouterLink to="/register" class="hover:text-gray-400">Register</RouterLink>
+            </div>
           </template>
-          <template v-if="authStore.token">
-            <div class="flex justify-between">
+          <template v-else>
+            <div class="flex justify-between gap-x-2">
               <RouterLink to="/chirps" class="hover:text-gray-400">Chirps</RouterLink>
               <RouterLink to="/logout" class="hover:text-gray-400">Logout</RouterLink>
             </div>
