@@ -27,3 +27,34 @@ npm install
 npm run format
 npm run dev
 ```
+
+Install TailwindCSS:
+
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+```
+
+Update `tailwind.config.js` to include your template paths:
+
+```typescript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./index.html",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+Update `src/assets/base.css`:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
