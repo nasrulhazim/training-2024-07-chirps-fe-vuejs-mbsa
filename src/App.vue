@@ -1,23 +1,41 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { useAuthStore } from './stores/auth';
+
+const authStore = useAuthStore();
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <div class="min-h-screen flex flex-col">
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+      <div class="container mx-auto flex justify-between items-center">
+        <div class="flex items-center">
+          <img alt="Vue logo" class="h-8 w-8 mr-2" src="@/assets/logo.svg" />
+          <span class="text-lg font-bold">Chirper</span>
+        </div>
+        <nav class="space-x-4">
+          <template v-if="!authStore.token">
+            <RouterLink to="/login" class="hover:text-gray-400">Login</RouterLink>
+            <RouterLink to="/register" class="hover:text-gray-400">Register</RouterLink>
+          </template>
+          <template v-if="authStore.token">
+            <div class="flex justify-between">
+              <RouterLink to="/chirps" class="hover:text-gray-400">Chirps</RouterLink>
+              <RouterLink to="/logout" class="hover:text-gray-400">Logout</RouterLink>
+            </div>
+          </template>
+        </nav>
+      </div>
+    </header>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <main class="flex-grow container mx-auto p-4">
+      <RouterView />
+    </main>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+    <footer class="bg-gray-800 text-white text-center p-4">
+      &copy; 2024 Chirper. All rights reserved.
+    </footer>
+  </div>
 </template>
 
 <style scoped>
@@ -26,60 +44,7 @@ header {
   max-height: 100vh;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
 nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+  color: white;
 }
 </style>
